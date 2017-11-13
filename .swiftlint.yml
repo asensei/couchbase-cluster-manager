@@ -1,0 +1,23 @@
+disabled_rules: # rule identifiers to exclude from running
+  - line_length
+  - identifier_name
+  - type_name
+  - large_tuple
+  - function_parameter_count
+function_body_length: 50
+type_name:
+  max_length: 60
+type_body_length: 400
+file_length: 630
+function_parameter_count: 6
+cyclomatic_complexity: 12
+included:
+  - Package.swift
+  - Sources
+  - Tests
+custom_rules:
+  space_above_return_rule:
+    includes: "*.swift"
+    name: "Space Above Return"
+    regex: '\S[^{\s:]\n[\t ]+return'
+    message: "Space required above return statement"
