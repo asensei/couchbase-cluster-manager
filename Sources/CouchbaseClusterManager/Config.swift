@@ -205,13 +205,13 @@ public extension Config {
                 throw Error.invalidKey("CCM_SG_USERNAME")
             }
 
-            guard let password: String = ProcessInfo.processInfo.environment["CCM_SG_PASSWORD"] else {
+            guard let passwordRaw: String = ProcessInfo.processInfo.environment["CCM_SG_PASSWORD"] else {
                 throw Error.invalidKey("CCM_SG_PASSWORD")
             }
 
             self.init(
                 username: username,
-                password: password
+                password: (try? Data(contentsOf: URL(fileURLWithPath: passwordRaw)).makeString()) ?? passwordRaw
             )
         }
     }
