@@ -83,6 +83,12 @@ public class Manager {
             try cluster.create(bucket: bucketConfig.name, memoryQuota: bucketConfig.memoryQuota)
         }
 
+        // Create SyncGateway user if needed
+        if let syncGatewayUserConfig = self.config.syncGatewayUser, try !cluster.exists(user: syncGatewayUserConfig.username) {
+            print("Creating sync gateway user \(syncGatewayUserConfig.username)")
+            try cluster.create(user: syncGatewayUserConfig.username, password: syncGatewayUserConfig.password, roles: "bucket_full_access[*],ro_admin")
+        }
+
         // Retrieve all current cluster nodes
         let nodes = try cluster.nodes()
 

@@ -27,16 +27,20 @@ public struct Config {
 
     public let bucket: Bucket?
 
+    public let syncGatewayUser: SyncGatewayUser?
+
     /// Time interval in between manager checks, in seconds.
     public let interval: UInt32
 
     public init(
         cluster: Cluster,
         bucket: Bucket?,
+        syncGatewayUser: SyncGatewayUser?,
         interval: UInt32
     ) {
         self.cluster = cluster
         self.bucket = bucket
+        self.syncGatewayUser = syncGatewayUser
         self.interval = interval
     }
 
@@ -56,6 +60,7 @@ public struct Config {
         self.init(
             cluster: try Cluster(),
             bucket: try? Bucket(),
+            syncGatewayUser: try? SyncGatewayUser(),
             interval: interval
         )
     }
@@ -173,6 +178,40 @@ public extension Config {
             self.init(
                 name: name,
                 memoryQuota: memoryQuota
+            )
+        }
+    }
+}
+
+public extension Config {
+
+    public struct SyncGatewayUser {
+
+        public let username: String
+
+        public let password: String
+
+        public init(
+            username: String,
+            password: String
+        ) {
+            self.username = username
+            self.password = password
+        }
+
+        public init() throws {
+
+            guard let username: String = ProcessInfo.processInfo.environment["CCM_SG_USERNAME"] else {
+                throw Error.invalidKey("CCM_SG_USERNAME")
+            }
+
+            guard let password: String = ProcessInfo.processInfo.environment["CCM_SG_PASSWORD"] else {
+                throw Error.invalidKey("CCM_SG_PASSWORD")
+            }
+
+            self.init(
+                username: username,
+                password: password
             )
         }
     }

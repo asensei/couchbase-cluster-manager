@@ -24,7 +24,7 @@ It's purpose is to automatically manage a cluster of Couchbase Server nodes runn
 - `Node`: a couchbase server instance.
 - `Service`: a docker swarm service, running a couchbase server container (a node).
 
-Couchbase Cluster Manager communicates directly with Docker Swarm and retrieves a list of running services at regular intervals (`CCM_INTERVAL`). The list is then filtered based on its `com.ccm.cluster` label to match the manager's `CCM_NAME` environment variable. It then proceeds to find an already provisioned node, if none is found a new cluster get initialized using the configuration specified on the container environment. At this stage a bucket named `CCM_BUCKET_NAME` is created, if defined in the configuration.
+Couchbase Cluster Manager communicates directly with Docker Swarm and retrieves a list of running services at regular intervals (`CCM_INTERVAL`). The list is then filtered based on its `com.ccm.cluster` label to match the manager's `CCM_NAME` environment variable. It then proceeds to find an already provisioned node, if none is found a new cluster get initialized using the configuration specified on the container environment. At this stage a bucket named `CCM_BUCKET_NAME` and a sync gateway user `CCM_SG_USERNAME` /  `CCM_SG_PASSWORD` are created, if defined in the configuration.
 
 Couchbase Cluster Manager now has access to a provisioned node in the cluster, and it proceeds to retrieve a list of well known nodes, in order to work out which ones have been removed and which ones have to be added. It does this, comparing the hostnames on the service list with the node's hostnames.
 
@@ -46,6 +46,8 @@ At this point, nodes matching services that are no longer presents on the Swarm 
 | `CCM_PASSWORD`     | ✔ | `-` | `/run/secrets/ccm_password` | Cluster administration password (plain text or secret). |
 | `CCM_BUCKET_NAME`     | `-` | `-` | `default` | Bucket name. |
 | `CCM_BUCKET_MEMORY_QUOTA`  | `-` | `-` | `512` | Bucket memory quota (MB). |
+| `CCM_SG_USERNAME`  | `-` | `-` | `syncgateway` | SyncGateway username. |
+| `CCM_SG_PASSWORD`  | `-` | `-` | `password` | SyncGateway password. |
 | `CCM_INTERVAL`     | `-` | `300` | `60` | Manager node consolidation interval (seconds). |
 
 ### Service Labels
@@ -100,6 +102,8 @@ services:
       - CCM_PASSWORD=password
       - CCM_BUCKET_NAME=default
       - CCM_BUCKET_MEMORY_QUOTA=512
+      - CCM_SG_USERNAME=syncgateway
+      - CCM_SG_PASSWORD=password
       - CCM_INTERVAL=300
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
