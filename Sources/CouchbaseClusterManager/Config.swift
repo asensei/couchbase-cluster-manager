@@ -138,7 +138,7 @@ public extension Config {
             self.init(
                 name: name,
                 username: username,
-                password: (try? Data(contentsOf: URL(fileURLWithPath: passwordRaw)).makeString()) ?? passwordRaw,
+                password: (try? Data(contentsOf: URL(fileURLWithPath: passwordRaw)).makeString().trim()) ?? passwordRaw,
                 memoryQuota: memoryQuota,
                 indexMemoryQuota: indexMemoryQuota,
                 ftsMemoryQuota: ftsMemoryQuota
@@ -211,7 +211,7 @@ public extension Config {
 
             self.init(
                 username: username,
-                password: (try? Data(contentsOf: URL(fileURLWithPath: passwordRaw)).makeString()) ?? passwordRaw
+                password: (try? Data(contentsOf: URL(fileURLWithPath: passwordRaw)).makeString().trim()) ?? passwordRaw
             )
         }
     }
