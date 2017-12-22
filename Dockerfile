@@ -1,4 +1,4 @@
-FROM asensei/vapor:xenial-swift-4.0.2
+FROM asensei/vapor:xenial-swift-4.0.3
 
 # Set environment variables for image
 ENV HOME /couchbase-cluster-manager

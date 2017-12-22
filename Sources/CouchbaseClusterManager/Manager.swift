@@ -67,8 +67,6 @@ public class Manager {
 
     func runIteration() throws {
 
-        print("Starting nodes consolidation")
-
         let services = try self.dataSource
             .fetch()
             .filter({ $0.cluster == self.config.cluster.name })
@@ -104,8 +102,10 @@ public class Manager {
             return !services.contains(where: { $0 == node })
         })
 
-        // Log summary
-        print("Nodes: \(nodes.count)\nServices:\n- Total: \(services.count)\n- Added: \(addedServices.count)\n- Removed: \(removedNodes.count)")
+        if !addedServices.isEmpty || !removedNodes.isEmpty {
+            // Log summary
+            print("Nodes: \(nodes.count)\nServices:\n- Total: \(services.count)\n- Added: \(addedServices.count)\n- Removed: \(removedNodes.count)")
+        }
 
         // Add new services to the cluster
         for service in addedServices {

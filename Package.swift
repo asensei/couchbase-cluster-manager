@@ -32,7 +32,7 @@ let package = Package(
     ],
 
     dependencies: [
-        .package(url: "https://github.com/vapor/vapor.git", .upToNextMajor(from: "2.3.0")),
+        .package(url: "https://github.com/vapor/vapor.git", .upToNextMajor(from: "2.4.2")),
         .package(url: "https://github.com/valeriomazzeo/docker-client-swift.git", .upToNextMajor(from: "1.0.0"))
     ],
 
