@@ -1,6 +1,6 @@
 # couchbase-cluster-manager
 
-![Swift](https://img.shields.io/badge/swift-4.0.2-orange.svg)
+![Swift](https://img.shields.io/badge/swift-4.0.3-orange.svg)
 ![Platform](https://img.shields.io/badge/platform-OSX-lightgrey.svg)
 ![Platform](https://img.shields.io/badge/platform-Linux-lightgrey.svg)
 
